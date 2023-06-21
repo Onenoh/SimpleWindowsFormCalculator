@@ -13,6 +13,7 @@ namespace SimpleCalculator
     public partial class Form1 : Form
     {
         double result = 0;
+        double result1 = 0;
         string operationalSign = string.Empty;
         bool isOperationPerformed = false;
         public Form1()
@@ -43,6 +44,7 @@ namespace SimpleCalculator
                 textBox_result.Text += button.Text;
             }
 
+            currentDisplay.Text = textBox_result.Text;
         }
 
         private void Operational_button(object sender, EventArgs e)
@@ -50,8 +52,25 @@ namespace SimpleCalculator
             Button button = (Button)sender;
             operationalSign = button.Text;
             result = Double.Parse(textBox_result.Text);
-            currentDisplay.Text = result + " " + operationalSign;
+            currentDisplay.Text = $"{result} {operationalSign}";
             isOperationPerformed = true;
+
+
+            //if (result != 0)
+            //{
+            //    button11.PerformClick();
+            //    operationalSign = button.Text;
+            //    currentDisplay.Text = result + " " + operationalSign;
+            //    isOperationPerformed = true;
+            //}
+            //else
+            //{
+            //    operationalSign = button.Text;
+            //    result = Double.Parse(textBox_result.Text);
+            //    currentDisplay.Text = result + " " + operationalSign;
+            //    isOperationPerformed = true;
+            //}
+
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -62,26 +81,34 @@ namespace SimpleCalculator
 
         private void button6_Click(object sender, EventArgs e)
         {
-           // textBox_result.Text = "0";
             var text = textBox_result.Text;
-            textBox_result.Text = text.Remove(text.Length - 1);
+            if (textBox_result.Text.Length > 0)
+            {
+                textBox_result.Text = text.Remove(text.Length - 1);
+            }
+            else
+            {
+                textBox_result.Text = "0";
+            }
+           
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
+
             switch (operationalSign)
             {
                 case "+":
-                    textBox_result.Text = (result + Double.Parse(textBox_result.Text)).ToString();
+                    textBox_result.Text = (result += result + Double.Parse(textBox_result.Text)).ToString();
                     break;
                 case "-":
-                    textBox_result.Text = (result - Double.Parse(textBox_result.Text)).ToString();
+                    textBox_result.Text = (result -= result - Double.Parse(textBox_result.Text)).ToString();
                     break;
                 case "*":
-                    textBox_result.Text = (result * Double.Parse(textBox_result.Text)).ToString();
+                    textBox_result.Text = (result *= result * Double.Parse(textBox_result.Text)).ToString();
                     break;
                 case "/":
-                    textBox_result.Text = (result / Double.Parse(textBox_result.Text)).ToString();
+                    textBox_result.Text = (result /= result / Double.Parse(textBox_result.Text)).ToString();
                     break;
                 default:
                     break;
